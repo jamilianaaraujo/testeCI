@@ -1,0 +1,26 @@
+name: Validar HTML
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  validar-html:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout do repositório
+    uses: actions/checkout@v4
+    - name: Mostrar arquivo (para inspeção)
+    run: |
+    echo "Conteúdo de index.html:"
+    sed -n '1,200p' index.html || true
+    - name: Instalar tidy (validador HTML)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y tidy
+    - name: Validar index.html com tidy (erros tratam como falha)
+  run: |
+    tidy -qe index.html
+
+
+
+
+
